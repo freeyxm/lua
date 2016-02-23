@@ -36,7 +36,7 @@ function list:pop_front()
 	
 	local tmp = self.data[self.head];
 	if (self.head >= self.tail) then
-		clear();
+		self:clear();
 	else
 		self.data[self.head] = nil;
 		self.head = self.head + 1;
@@ -51,7 +51,7 @@ function list:pop_back()
 	
 	local tmp = self.data[self.tail];
 	if (self.head >= self.tail) then
-		clear();
+		self:clear();
 	else
 		self.data[self.tail] = nil;
 		self.tail = self.tail - 1;
@@ -73,6 +73,14 @@ function list:back()
 	return self.data[self.head];
 end
 
+function list:at( index )
+	if (self.head + index > self.tail) then
+		return nil;
+	else
+		return self.data[self.head + index];
+	end
+end
+
 function list:clear()
 	self.head = 1;
 	self.tail = self.head - 1;
@@ -81,6 +89,22 @@ end
 
 function list:empty()
 	return self.head > self.tail;
+end
+
+function list:count()
+	if (self.tail >= self.head) then
+		return self.tail - self.head + 1;
+	else
+		return 0;
+	end
+end
+
+function list:toArray()
+	local result = {};
+	for i = self.head, self.tail do
+		table.insert(result, self.data[i]);
+	end
+	return result;
 end
 
 function list:tostr()
